@@ -6,7 +6,7 @@
 /*   By: rchahban <rchahban@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/07 09:35:13 by rchahban          #+#    #+#             */
-/*   Updated: 2024/03/14 01:05:52 by rchahban         ###   ########.fr       */
+/*   Updated: 2024/03/14 15:58:07 by rchahban         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,6 @@ int main (int argc, char **argv)
 		return (1);
 	}
 	std::string result = ScalarConverter::convert(argv[1]);
-	std::cout << result << std::endl;
+	std::cout << result;
 	return (0);
 }

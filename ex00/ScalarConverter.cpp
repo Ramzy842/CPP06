@@ -6,7 +6,7 @@
 /*   By: rchahban <rchahban@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/07 09:15:05 by rchahban          #+#    #+#             */
-/*   Updated: 2024/03/14 01:44:31 by rchahban         ###   ########.fr       */
+/*   Updated: 2024/03/14 16:49:45 by rchahban         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,6 +107,13 @@ bool checkInt(const std::string& str)
 	return allDigits(strTemp);
 }
 
+void printTypes(bool isChar, bool isInt, bool isFloat, bool isDouble)
+{
+	std::cout << "char: " << isChar << std::endl;
+	std::cout << "int: " << isInt << std::endl;
+	std::cout << "float: " << isFloat << std::endl;
+	std::cout << "double: " << isDouble << std::endl;
+}
 
 std::string ScalarConverter::convert(const std::string& str)
 {
@@ -115,31 +122,80 @@ std::string ScalarConverter::convert(const std::string& str)
     bool isFloat = checkFloat(str);
     bool isDouble = checkDouble(str);
 
-	char charValue;
-	int intValue;
-	// float floatValue;
-	// double doubleValue;
-	if (isChar)
+	char charValue = '\0';
+	int intValue = 0;
+	float floatValue = 0;
+	double doubleValue = 0;
+	printTypes(isChar, isInt, isFloat, isDouble);
+	bool err = false;
+	if (!isChar && !isInt && !isFloat && !isDouble)
+		err = true;
+	if (str == "nan")
+	{
+		std::cout << "char: impossible" << std::endl;
+		std::cout << "int: " << "impossible" << std::endl;
+		std::cout << "float: " << "nanf" << std::endl;
+		std::cout << "double: " << "nan" << std::endl;
+	}
+	else if (isChar)
 	{
 		charValue = str[0];
-		std::cout << "char: '" << str << "'" << std::endl;
-		std::cout << "int: " << static_cast<int>(charValue) << std::endl;
-		std::cout << "float: " << static_cast<float>(charValue) << ".0f" << std::endl;
-		std::cout << "double: " << static_cast<double>(charValue) << ".0" << std::endl;
+		intValue = static_cast<int>(charValue);
+		floatValue = static_cast<float>(charValue);
+		doubleValue = static_cast<double>(charValue);
 	}
 	else if (isInt)
 	{
-		intValue = std::stoi(str);
-		std::cout << "char: Non displayable" << std::endl;
-		std::cout << "int: " << static_cast<int>(intValue) << std::endl;
-		std::cout << "float: " << static_cast<float>(intValue) << ".0f" << std::endl;
-		std::cout << "double: " << static_cast<double>(intValue) << ".0" << std::endl;
+		try {
+			intValue = std::stoi(str);
+			floatValue = static_cast<float>(intValue);
+			doubleValue = static_cast<double>(intValue);
+		}
+		catch (std::out_of_range& e){
+			err = true;
+		}
 	}
 	else if (isFloat)
-		return "it's a float";
+	{
+		try {
+			floatValue = std::stof(str);
+			charValue = static_cast<char>(floatValue);
+			intValue = static_cast<int>(floatValue);
+			doubleValue = static_cast<double>(floatValue);
+		}
+		catch (std::out_of_range& e)
+		{
+			err = true;
+		}
+	}	
 	else if (isDouble)
-		return "it's a double";
-	else if (str == "nan")
-		return "it's a nan";
+	{
+		try {
+			doubleValue = std::stod(str);
+			floatValue = static_cast<float>(doubleValue);
+			charValue = static_cast<char>(doubleValue);
+			intValue = static_cast<int>(doubleValue);
+		}
+		catch (std::out_of_range& e)
+		{
+			err = true;
+		}
+	}
+	if (err)
+	{
+		std::cout << "char: impossible" << std::endl;
+		std::cout << "int: " << "impossible" << std::endl;
+		std::cout << "float: " << "impossible" << std::endl;
+		std::cout << "double: " << "impossible" << std::endl;
+	}
+	else {
+		if (charValue)
+			std::cout << "char: '" << charValue << "'" << std::endl;
+		else if (!charValue)
+			std::cout << "char: " << "Non displayable" << std::endl;
+		std::cout << "int: " << intValue << std::endl;
+		std::cout << "float: " << floatValue << ".0f" << std::endl;
+		std::cout << "double: " << doubleValue << ".0" << std::endl;
+	}
 	return "";
 }
