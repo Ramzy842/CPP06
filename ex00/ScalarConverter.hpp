@@ -6,16 +6,17 @@
 /*   By: rchahban <rchahban@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/07 09:13:37 by rchahban          #+#    #+#             */
-/*   Updated: 2024/03/14 16:47:15 by rchahban         ###   ########.fr       */
+/*   Updated: 2024/03/21 03:13:30 by rchahban         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef SCALER_CONVERTER
-# define SCALER_CONVERTER
+#ifndef SCALER_CONVERTER_HPP
+# define SCALER_CONVERTER_HPP
 
 #include <iostream>
 #include <limits>
 #include <cctype>
+#include <iomanip>
 
 class ScalarConverter
 {
@@ -24,8 +25,12 @@ class ScalarConverter
 		~ScalarConverter();
 		ScalarConverter(const ScalarConverter& original);
 		ScalarConverter& operator=(const ScalarConverter& original);
+		static int intValue;
+		static float floatValue;
+		static double doubleValue;
+		static char charValue;
 	public:
-		static std::string convert(const std::string& str);
+		static void convert(const std::string& str);
 };
 
 #endif

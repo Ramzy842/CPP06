@@ -1,24 +1,34 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.cpp                                           :+:      :+:    :+:   */
+/*   Serialize.hpp                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rchahban <rchahban@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/03/07 09:35:13 by rchahban          #+#    #+#             */
-/*   Updated: 2024/03/15 23:30:39 by rchahban         ###   ########.fr       */
+/*   Created: 2024/03/21 01:18:11 by rchahban          #+#    #+#             */
+/*   Updated: 2024/03/21 03:45:53 by rchahban         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "./ScalarConverter.hpp"
+#ifndef SERIALIZE_HPP
+# define SERIALIZE_HPP
 
-int main (int argc, char **argv)
+#include "./Data.hpp"
+#include <iostream>
+#include <limits>
+#include <cctype>
+#include <iomanip>
+
+class Serialize
 {
-	if (argc != 2 || argv[2])
-	{
-		std::cerr << "Usage: ./convert arg" << std::endl;
-		return (1);
-	}
-	ScalarConverter::convert(argv[1]);
-	return (0);
-}
+	private:
+		Serialize();
+		~Serialize();
+		Serialize(const Serialize& original);
+		Serialize& operator=(const Serialize& original);
+	public:
+		static uintptr_t serialize(Data* ptr);
+		static Data* deserialize(uintptr_t raw);
+};
+
+#endif
